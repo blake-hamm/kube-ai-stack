@@ -1,5 +1,7 @@
 global:
   namespace: models
+  prometheusUrl: "http://prometheus-server.monitoring.svc.cluster.local:9090"
+  litellmNamespace: litellm
   image:
     repository: kyuz0/amd-strix-halo-toolboxes
     tag: vulkan-radv

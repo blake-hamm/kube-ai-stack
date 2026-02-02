@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: litellm-config
-  namespace: litellm
+  namespace: {{ $.Values.global.litellmNamespace }}
   annotations:
     argocd.argoproj.io/sync-wave: "22"
 data:
@@ -17,7 +17,7 @@ data:
     - model_name: {{ .name | quote }}
       litellm_params:
         model: {{ printf "openai/%s" .name | quote }}
-        api_base: {{ printf "http://%s.models.svc.cluster.local:8080/v1" .name | quote }}
+        api_base: {{ printf "http://%s.%s.svc.cluster.local:%d/v1" .name $.Values.global.namespace .service.port | quote }}
         api_key: "dummy"
         {{- if .litellm_params }}
         timeout: {{ .litellm_params.timeout | default 1800 }}
