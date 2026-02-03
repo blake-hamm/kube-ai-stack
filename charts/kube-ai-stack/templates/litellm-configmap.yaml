@@ -17,7 +17,7 @@ data:
     - model_name: {{ .name | quote }}
       litellm_params:
         model: {{ printf "openai/%s" .name | quote }}
-        api_base: {{ printf "http://%s.%s.svc.cluster.local:%d/v1" .name $.Values.global.namespace (coalesce .service.port $.Values.global.service.port) | quote }}
+        api_base: {{ printf "http://%s.%s.svc.cluster.local:%d/v1" .name $.Values.global.namespace $.Values.global.service.port | quote }}
         api_key: "dummy"
         {{- if .litellm_params }}
         timeout: {{ .litellm_params.timeout | default 1800 }}
