@@ -7,7 +7,7 @@ metadata:
   name: {{ .name }}
   namespace: {{ $.Values.global.namespace }}
   annotations:
-    argocd.argoproj.io/sync-wave: {{ $.Values.integrations.argocd.syncWave.serviceMonitor }}
+    argocd.argoproj.io/sync-wave: {{ $.Values.integrations.argocd.syncWave.serviceMonitor | quote }}
   labels:
     {{- include "kube-ai-stack.modelLabels" (dict "model" . "root" $) | nindent 4 }}
 spec:

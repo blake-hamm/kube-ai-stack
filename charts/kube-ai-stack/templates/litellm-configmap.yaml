@@ -5,7 +5,7 @@ metadata:
   name: litellm-config
   namespace: {{ $.Values.global.litellmNamespace }}
   annotations:
-    argocd.argoproj.io/sync-wave: {{ $.Values.integrations.argocd.syncWave.configMap }}
+    argocd.argoproj.io/sync-wave: {{ $.Values.integrations.argocd.syncWave.configMap | quote }}
   labels:
     {{- include "kube-ai-stack.configMapLabels" $ | nindent 4 }}
 data:
