@@ -64,6 +64,27 @@ global:
         num_retries: 1
         retry_after: 15
         routing_strategy: simple-shuffle
+
+# Server presets for llama-cpp configuration
+serverPresets:
+  llamaCpp:
+    defaultPort: 8080
+    healthPath: "/health"
+    # Additional server-related configurations can be added here
+    # metricsPath: "/metrics"
+    # host: "0.0.0.0"
+
+# Integration configurations
+integrations:
+  argocd:
+    syncWave:
+      configMap: "20"
+      pvc: "20"
+      deployment: "21"
+      service: "22"
+      serviceMonitor: "23"
+      autoscaling: "24"
+
 models: []
 # - name: example-model
 #   enabled: true

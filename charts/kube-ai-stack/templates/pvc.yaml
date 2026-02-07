@@ -8,7 +8,7 @@ metadata:
   name: "{{ .name }}-cache"
   namespace: {{ $merged.namespace }}
   annotations:
-    argocd.argoproj.io/sync-wave: "22"
+    argocd.argoproj.io/sync-wave: {{ $.Values.integrations.argocd.syncWave.pvc }}
   labels:
     {{- include "kube-ai-stack.pvcLabels" $ | nindent 4 }}
 spec:

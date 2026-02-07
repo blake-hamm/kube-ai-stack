@@ -8,7 +8,7 @@ metadata:
   name: {{ .name }}
   namespace: {{ $merged.namespace }}
   annotations:
-    argocd.argoproj.io/sync-wave: "22"
+    argocd.argoproj.io/sync-wave: {{ $.Values.integrations.argocd.syncWave.deployment }}
   labels:
     {{- include "kube-ai-stack.modelLabels" (dict "model" . "root" $) | nindent 4 }}
 spec:
@@ -60,28 +60,28 @@ spec:
               readOnly: true
 {{- end }}
           ports:
-            - containerPort: 8080
+            - containerPort: {{ $merged.serverPresets.llamaCpp.defaultPort }}
               name: http
           startupProbe:
             httpGet:
-              path: /health
-              port: 8080
+              path: {{ $merged.serverPresets.llamaCpp.healthPath }}
+              port: {{ $merged.serverPresets.llamaCpp.defaultPort }}
             initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 10
             failureThreshold: 240
           readinessProbe:
             httpGet:
-              path: /health
-              port: 8080
+              path: {{ $merged.serverPresets.llamaCpp.healthPath }}
+              port: {{ $merged.serverPresets.llamaCpp.defaultPort }}
             initialDelaySeconds: 0
             periodSeconds: 60
             timeoutSeconds: 15
             failureThreshold: 30
           livenessProbe:
             httpGet:
-              path: /health
-              port: 8080
+              path: {{ $merged.serverPresets.llamaCpp.healthPath }}
+              port: {{ $merged.serverPresets.llamaCpp.defaultPort }}
             initialDelaySeconds: 120
             periodSeconds: 120
             timeoutSeconds: 20

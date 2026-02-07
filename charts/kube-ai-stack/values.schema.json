@@ -233,6 +233,101 @@
           "enabled"
         ]
       }
+    },
+    "serverPresets": {
+      "type": "object",
+      "description": "Server presets for llama-cpp configuration",
+      "properties": {
+        "llamaCpp": {
+          "type": "object",
+          "description": "Configuration for llama-cpp server preset",
+          "properties": {
+            "defaultPort": {
+              "type": "integer",
+              "description": "Default port for the llama-cpp server",
+              "default": 8080
+            },
+            "healthPath": {
+              "type": "string",
+              "description": "Health check endpoint path",
+              "default": "/health"
+            },
+            "image": {
+              "type": "object",
+              "description": "Container image configuration for llama-cpp server",
+              "properties": {
+                "repository": {
+                  "type": "string",
+                  "description": "Container image repository"
+                },
+                "tag": {
+                  "type": "string",
+                  "description": "Container image tag"
+                }
+              }
+            },
+            "envVars": {
+              "type": "object",
+              "description": "Environment variables for the llama-cpp server",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "integrations": {
+      "type": "object",
+      "description": "Integration configurations for external tools and services",
+      "properties": {
+        "argocd": {
+          "type": "object",
+          "description": "ArgoCD integration configuration",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether ArgoCD integration is enabled"
+            },
+            "syncWave": {
+              "type": "object",
+              "description": "ArgoCD sync wave configuration for resource deployment order",
+              "properties": {
+                "pvc": {
+                  "type": "string",
+                  "description": "Sync wave for PersistentVolumeClaim resources",
+                  "default": "20"
+                },
+                "deployment": {
+                  "type": "string",
+                  "description": "Sync wave for Deployment resources",
+                  "default": "21"
+                },
+                "service": {
+                  "type": "string",
+                  "description": "Sync wave for Service resources",
+                  "default": "22"
+                },
+                "serviceMonitor": {
+                  "type": "string",
+                  "description": "Sync wave for ServiceMonitor resources",
+                  "default": "23"
+                },
+                "autoscaling": {
+                  "type": "string",
+                  "description": "Sync wave for Autoscaling resources",
+                  "default": "24"
+                },
+                "configMap": {
+                  "type": "string",
+                  "description": "Sync wave for ConfigMap resources",
+                  "default": "20"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "required": [

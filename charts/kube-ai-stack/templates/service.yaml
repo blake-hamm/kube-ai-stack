@@ -8,7 +8,7 @@ metadata:
   name: {{ .name }}
   namespace: {{ $merged.namespace }}
   annotations:
-    argocd.argoproj.io/sync-wave: "23"
+    argocd.argoproj.io/sync-wave: {{ $.Values.integrations.argocd.syncWave.service }}
   labels:
     {{- include "kube-ai-stack.serviceLabels" $ | nindent 4 }}
 spec:
