@@ -10,8 +10,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "22"
   labels:
-    app: {{ .name }}
-    release: {{ $.Release.Name }}
+    {{- include "kube-ai-stack.pvcLabels" . | nindent 4 }}
 spec:
   accessModes:
     - ReadWriteOnce

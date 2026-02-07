@@ -10,12 +10,11 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "23"
   labels:
-    app: {{ .name }}
-    release: {{ $.Release.Name }}
+    {{- include "kube-ai-stack.serviceLabels" . | nindent 4 }}
 spec:
   type: ClusterIP
   selector:
-    app: {{ .name }}
+    {{- include "kube-ai-stack.modelSelectorLabels" (dict "model" . "root" $) | nindent 4 }}
   ports:
     - name: http
       port: {{ $merged.service.port }}

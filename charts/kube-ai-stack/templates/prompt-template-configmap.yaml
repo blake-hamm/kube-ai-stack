@@ -8,8 +8,7 @@ metadata:
   name: {{ .name }}-template
   namespace: {{ $.Values.global.namespace }}
   labels:
-    app: {{ .name }}
-    release: {{ $.Release.Name }}
+    {{- include "kube-ai-stack.configMapLabels" . | nindent 4 }}
 data:
   template.jinja: |
 {{ .template | indent 4 }}

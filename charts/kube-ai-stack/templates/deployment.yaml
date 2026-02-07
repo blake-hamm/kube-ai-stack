@@ -10,20 +10,18 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "22"
   labels:
-    app: {{ .name }}
-    release: {{ $.Release.Name }}
+    {{- include "kube-ai-stack.modelLabels" (dict "model" . "root" $) | nindent 4 }}
 spec:
   replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: {{ .name }}
+      {{- include "kube-ai-stack.modelSelectorLabels" (dict "model" . "root" $) | nindent 6 }}
   template:
     metadata:
       labels:
-        app: {{ .name }}
-        release: {{ $.Release.Name }}
+        {{- include "kube-ai-stack.modelSelectorLabels" (dict "model" . "root" $) | nindent 8 }}
     spec:
       tolerations:
 {{- toYaml $merged.tolerations | nindent 8 }}
