@@ -2,17 +2,17 @@
 Chart name
 */}}
 {{- define "kube-ai-stack.name" -}}
-{{- default $.Chart.Name $.Values.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Standard labels
 */}}
 {{- define "kube-ai-stack.labels" -}}
-helm.sh/chart: {{ printf "%s-%s" $.Chart.Name $.Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 app.kubernetes.io/name: {{ include "kube-ai-stack.name" . }}
-app.kubernetes.io/version: {{ $.Chart.Version | quote }}
-app.kubernetes.io/managed-by: {{ $.Release.Service }}
+app.kubernetes.io/version: {{ .Chart.Version | quote }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/part-of: kube-ai-stack
 {{- end }}
 
@@ -21,8 +21,26 @@ Component labels - for use with specific components
 */}}
 {{- define "kube-ai-stack.componentLabels" -}}
 {{ include "kube-ai-stack.labels" . }}
-app.kubernetes.io/instance: {{ $.Release.Name }}
+app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/component: {{ .component | default "default" }}
+{{- end }}
+
+{{/*
+Service labels
+*/}}
+{{- define "kube-ai-stack.serviceLabels" -}}
+{{ include "kube-ai-stack.labels" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: service
+{{- end }}
+
+{{/*
+PVC labels
+*/}}
+{{- define "kube-ai-stack.pvcLabels" -}}
+{{ include "kube-ai-stack.labels" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: storage
 {{- end }}
 
 {{/*
@@ -44,28 +62,10 @@ app.kubernetes.io/instance: {{ .root.Release.Name }}-{{ .model.name }}
 {{- end }}
 
 {{/*
-Service labels
-*/}}
-{{- define "kube-ai-stack.serviceLabels" -}}
-{{ include "kube-ai-stack.labels" . }}
-app.kubernetes.io/instance: {{ $.Release.Name }}
-app.kubernetes.io/component: service
-{{- end }}
-
-{{/*
-PVC labels
-*/}}
-{{- define "kube-ai-stack.pvcLabels" -}}
-{{ include "kube-ai-stack.labels" . }}
-app.kubernetes.io/instance: {{ $.Release.Name }}
-app.kubernetes.io/component: storage
-{{- end }}
-
-{{/*
 ConfigMap labels
 */}}
 {{- define "kube-ai-stack.configMapLabels" -}}
 {{ include "kube-ai-stack.labels" . }}
-app.kubernetes.io/instance: {{ $.Release.Name }}
+app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/component: config
 {{- end }}
