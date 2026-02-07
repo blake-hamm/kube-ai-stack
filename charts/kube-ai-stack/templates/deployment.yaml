@@ -60,28 +60,28 @@ spec:
               readOnly: true
 {{- end }}
           ports:
-            - containerPort: {{ $merged.serverPresets.llamaCpp.defaultPort }}
+            - containerPort: {{ $.Values.serverPresets.llamaCpp.defaultPort }}
               name: http
           startupProbe:
             httpGet:
-              path: {{ $merged.serverPresets.llamaCpp.healthPath }}
-              port: {{ $merged.serverPresets.llamaCpp.defaultPort }}
+              path: {{ $.Values.serverPresets.llamaCpp.healthPath }}
+              port: {{ $.Values.serverPresets.llamaCpp.defaultPort }}
             initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 10
             failureThreshold: 240
           readinessProbe:
             httpGet:
-              path: {{ $merged.serverPresets.llamaCpp.healthPath }}
-              port: {{ $merged.serverPresets.llamaCpp.defaultPort }}
+              path: {{ $.Values.serverPresets.llamaCpp.healthPath }}
+              port: {{ $.Values.serverPresets.llamaCpp.defaultPort }}
             initialDelaySeconds: 0
             periodSeconds: 60
             timeoutSeconds: 15
             failureThreshold: 30
           livenessProbe:
             httpGet:
-              path: {{ $merged.serverPresets.llamaCpp.healthPath }}
-              port: {{ $merged.serverPresets.llamaCpp.defaultPort }}
+              path: {{ $.Values.serverPresets.llamaCpp.healthPath }}
+              port: {{ $.Values.serverPresets.llamaCpp.defaultPort }}
             initialDelaySeconds: 120
             periodSeconds: 120
             timeoutSeconds: 20
