@@ -9,12 +9,11 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "24"
   labels:
-    app: {{ .name }}
-    release: {{ $.Release.Name }}
+    {{- include "kube-ai-stack.modelLabels" (dict "model" . "root" $) | nindent 4 }}
 spec:
   selector:
     matchLabels:
-      app: {{ .name }}
+      {{- include "kube-ai-stack.modelSelectorLabels" (dict "model" . "root" $) | nindent 6 }}
   endpoints:
     - port: http
       path: /metrics

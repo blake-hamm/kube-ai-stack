@@ -10,8 +10,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "25"
   labels:
-    app: {{ .name }}
-    release: {{ $.Release.Name }}
+    {{- include "kube-ai-stack.modelLabels" (dict "model" . "root" $) | nindent 4 }}
 spec:
   minTargetReplicas: {{ $merged.zeroscaling.minReplicas }}
   service: {{ .name }}

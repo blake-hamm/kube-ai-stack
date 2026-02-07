@@ -1,0 +1,242 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Kube AI Stack Values",
+  "description": "Schema for the values.yaml file of the kube-ai-stack Helm chart.",
+  "type": "object",
+  "properties": {
+    "global": {
+      "type": "object",
+      "description": "Global configuration settings that apply to all models unless overridden.",
+      "properties": {
+        "namespace": {
+          "type": "string",
+          "description": "The Kubernetes namespace to deploy the models into."
+        },
+        "prometheusUrl": {
+          "type": "string",
+          "description": "The URL of the Prometheus server for metrics."
+        },
+        "litellmNamespace": {
+          "type": "string",
+          "description": "The Kubernetes namespace where LiteLLM is running."
+        },
+        "image": {
+          "type": "object",
+          "properties": {
+            "repository": {
+              "type": "string"
+            },
+            "tag": {
+              "type": "string"
+            },
+            "pullPolicy": {
+              "type": "string",
+              "enum": [
+                "IfNotPresent",
+                "Always",
+                "Never"
+              ]
+            }
+          }
+        },
+        "pvc": {
+          "type": "object",
+          "properties": {
+            "storageClassName": {
+              "type": "string"
+            },
+            "storage": {
+              "type": "string"
+            }
+          }
+        },
+        "service": {
+          "type": "object",
+          "properties": {
+            "port": {
+              "type": "integer"
+            }
+          }
+        },
+        "zeroscaling": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "minReplicas": {
+              "type": "integer"
+            },
+            "cooldownPeriod": {
+              "type": "integer"
+            },
+            "trigger": {
+              "type": "object",
+              "properties": {
+                "query": {
+                  "type": "string"
+                },
+                "threshold": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "resources": {
+          "type": "object",
+          "properties": {
+            "limits": {
+              "type": "object",
+              "properties": {
+                "amd.com/gpu": {
+                  "type": "integer"
+                },
+                "memory": {
+                  "type": "string"
+                },
+                "cpu": {
+                  "type": "string"
+                }
+              }
+            },
+            "requests": {
+              "type": "object",
+              "properties": {
+                "amd.com/gpu": {
+                  "type": "integer"
+                },
+                "cpu": {
+                  "type": "string"
+                },
+                "memory": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "tolerations": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "nodeSelector": {
+          "type": "object"
+        },
+        "hfToken": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "secretName": {
+              "type": "string"
+            },
+            "secretKey": {
+              "type": "string"
+            }
+          }
+        },
+        "litellm": {
+          "type": "object",
+          "properties": {
+            "manage_config": {
+              "type": "boolean"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "litellm_settings": {
+                  "type": "object"
+                },
+                "general_settings": {
+                  "type": "object"
+                },
+                "router_settings": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "models": {
+      "type": "array",
+      "description": "A list of LLM models to deploy.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the model. This will be used for the deployment, service, and other resources."
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether this model is enabled and should be deployed."
+          },
+          "description": {
+            "type": "string",
+            "description": "A description of the model."
+          },
+          "pvc": {
+            "type": "object",
+            "properties": {
+              "storage": {
+                "type": "string"
+              },
+              "storageClassName": {
+                "type": "string"
+              }
+            }
+          },
+          "args": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "template": {
+            "type": "string",
+            "description": "A Jinja2 template for the model's prompt."
+          },
+          "image": {
+            "type": "object",
+            "properties": {
+              "repository": {
+                "type": "string"
+              },
+              "tag": {
+                "type": "string"
+              }
+            }
+          },
+          "service": {
+            "type": "object",
+            "properties": {
+              "port": {
+                "type": "integer"
+              }
+            }
+          },
+          "resources": {
+            "type": "object"
+          },
+          "zeroscaling": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "name",
+          "enabled"
+        ]
+      }
+    }
+  },
+  "required": [
+    "global",
+    "models"
+  ]
+}

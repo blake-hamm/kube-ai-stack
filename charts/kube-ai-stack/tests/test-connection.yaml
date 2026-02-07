@@ -1,0 +1,21 @@
+{{- range $index, $model := .Values.models }}
+{{- if and .enabled (eq $index 0) }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "kube-ai-stack.name" . }}-test-connection"
+  namespace: {{ $.Values.global.namespace }}
+  labels:
+    {{- include "kube-ai-stack.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ .name }}:{{ .service.port | default $.Values.global.service.port }}/health']
+  restartPolicy: Never
+{{- end }}
+{{- end }}

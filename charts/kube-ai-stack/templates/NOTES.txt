@@ -1,0 +1,65 @@
+Thank you for installing the kube-ai-stack Helm chart.
+
+== Post-Installation Information ==
+
+This chart deploys LLM model backends with LiteLLM integration on your Kubernetes cluster.
+
+== Accessing Services ==
+
+1. Model Services:
+   Each deployed model is accessible via its Kubernetes Service within the namespace specified in values.yaml (default: "models").
+   
+   Service endpoint format:
+   http://<model-name>.<namespace>.svc.cluster.local:<service-port>
+   
+   Example:
+   http://example-model.models.svc.cluster.local:8080
+
+2. LiteLLM Proxy:
+   If LiteLLM is configured, access it at:
+   http://litellm-proxy.<litellm-namespace>.svc.cluster.local:4000
+
+3. Health Endpoints:
+   Each model exposes a health check at:
+   http://<model-name>.<namespace>.svc.cluster.local:8080/health
+
+4. Metrics:
+   Prometheus metrics are available at:
+   http://<model-name>.<namespace>.svc.cluster.local:8080/metrics
+
+== Default Ports ==
+
+- Model services: 8080 (configurable via global.service.port)
+- LiteLLM proxy: 4000 (if deployed)
+
+== Next Steps ==
+
+1. Verify deployments:
+   kubectl get deployments -n {{ .Values.global.namespace }}
+   kubectl get pods -n {{ .Values.global.namespace }}
+
+2. Check service status:
+   kubectl get svc -n {{ .Values.global.namespace }}
+
+3. View logs:
+   kubectl logs -n {{ .Values.global.namespace }} -l app.kubernetes.io/part-of=kube-ai-stack
+
+4. If using Prometheus monitoring, verify ServiceMonitors are created:
+   kubectl get servicemonitor -n {{ .Values.global.namespace }}
+
+5. Configure authentication tokens if needed (HF_TOKEN, etc.)
+
+== Configuration ==
+
+To customize the deployment, create a values file with your configuration:
+
+   helm upgrade --install my-release charts/kube-ai-stack -f my-values.yaml
+
+See the chart's README.md for detailed configuration options.
+
+== Troubleshooting ==
+
+- If pods are not starting, check resource constraints (GPU, memory)
+- For model loading issues, verify model paths and storage
+- Check pod logs: kubectl logs <pod-name> -n {{ .Values.global.namespace }}
+- Verify network policies allow communication between services

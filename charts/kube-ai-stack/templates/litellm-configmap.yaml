@@ -6,6 +6,8 @@ metadata:
   namespace: {{ $.Values.global.litellmNamespace }}
   annotations:
     argocd.argoproj.io/sync-wave: "22"
+  labels:
+    {{- include "kube-ai-stack.configMapLabels" $ | nindent 4 }}
 data:
   config.yaml: |
     {{- with .Values.global.litellm.config }}
