@@ -11,6 +11,8 @@ This chart deploys multiple LLM models as Kubernetes Deployments with:
 - Prometheus metrics endpoints
 - Optional scale-to-zero via Kube Elasti
 - LiteLLM proxy configuration for llm gateway
+- Optional MLflow integration for experiment tracking and model registry
+- Optional Phoenix (Arize) integration for ML observability and tracing
 
 ## Installation
 
@@ -57,6 +59,13 @@ The following table lists the configurable parameters of the kube-ai-stack chart
 | `global.service.port` | Default service port | `8080` |
 | `global.pvc.storageClassName` | Storage class for PVCs | `local-path` |
 | `global.pvc.storage` | Default storage size | `10Gi` |
+
+### Observability Parameters
+
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `global.mlflow.enabled` | Enable MLflow deployment | `false` |
+| `global.phoenix.enabled` | Enable Phoenix deployment | `false` |
 
 ### LiteLLM Configuration
 
@@ -209,6 +218,24 @@ global:
         - 0.0.0.0
 ```
 
+### With MLflow and Phoenix Enabled
+
+```yaml
+global:
+  namespace: llm-models
+  mlflow:
+    enabled: true
+  phoenix:
+    enabled: true
+  litellm:
+    manage_config: true
+    config:
+      litellm_settings:
+        callbacks: ["arize_phoenix"]
+        success_callback: ["mlflow"]
+        failure_callback: ["mlflow"]
+```
+
 ## Architecture
 
 ```
@@ -238,6 +265,16 @@ global:
 │         │                                                   │
 │  ┌──────┴───────────────────────────────────────────┐      │
 │  │              LiteLLM ConfigMap                    │      │
+│  └───────────────────────────────────────────────────┘      │
+│         │                                                   │
+│  ┌──────┴───────────────────────────────────────────┐      │
+│  │              MLflow (Optional)                   │      │
+│  │         Experiment Tracking & Registry           │      │
+│  └───────────────────────────────────────────────────┘      │
+│         │                                                   │
+│  ┌──────┴───────────────────────────────────────────┐      │
+│  │              Phoenix (Optional)                  │      │
+│  │         ML Observability & Tracing               │      │
 │  └───────────────────────────────────────────────────┘      │
 └─────────────────────────────────────────────────────────────┘
 ```
