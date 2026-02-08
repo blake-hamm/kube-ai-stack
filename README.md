@@ -1,6 +1,6 @@
 # kube-ai-stack
 
-A solution inspired by the kube-prometheus stack with the intention of providing an 'all-in-one' ai platform solution. At the moment, it's geared towards [my homelab](https://docs.bhamm-lab.com/ai/), but I will continue making it as agnostic as possible. Feedback is welcome!
+A solution inspired by the [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) with the intention of providing an 'all-in-one' ai platform solution. At the moment, it's geared towards [my homelab](https://docs.bhamm-lab.com/ai/), but I will continue making it agnostic to any LLMOps/MLops environment. **Feedback is welcome!**
 
 ## Overview
 
@@ -60,7 +60,7 @@ kube-ai-stack provides a complete Helm-based deployment solution for running mul
 ### Prerequisites
 
 - Kubernetes cluster (v1.19+)
-- GPU operators installed (for GPU workloads)
+- GPU operators installed
 - Helm 3.x
 - kubectl configured for your cluster
 
@@ -91,37 +91,17 @@ kubectl get services -n models
 kubectl get pods -n models
 ```
 
-## Project Structure
-
-```
-kube-ai-stack/
-├── charts/
-│   └── kube-ai-stack/          # Main Helm chart
-│       ├── templates/          # Kubernetes manifests
-│       │   ├── deployment.yaml
-│       │   ├── service.yaml
-│       │   ├── pvc.yaml
-│       │   ├── litellm-configmap.yaml
-│       │   ├── servicemonitor.yaml
-│       │   ├── elastiservice.yaml
-│       │   └── prompt-template-configmap.yaml
-│       ├── values.yaml         # Default configuration
-│       ├── values.schema.json  # Configuration schema
-│       └── README.md          # Chart-specific documentation
-├── LICENSE                    # BSD 3-Clause License
-└── README.md                  # This file
-```
 
 ## Core Components
 
 ### Model Deployments
 - **Container**: Examples with AMD-optimized images for llama.cpp server
 - **GPU Support**: Native GPU resource allocation
-- **Health Monitoring**: Built-in health checks and readiness probes
+- **Health Monitoring**: Built-in health checks and readiness probes based on llama.cpp
 - **Resource Management**: Configurable CPU, memory, and GPU limits
 
 ### LiteLLM Integration
-- **Unified API**: Single endpoint for all model interactions with templated configmap
+- **Unified API**: Single OpenAI API compatable endpoint for all model interactions with templated configmap
 - **Load Balancing**: Intelligent request routing across model instances
 - **Caching**: Optional semantic caching for improved performance
 - **Monitoring**: Request tracking and performance metrics
@@ -155,12 +135,13 @@ For detailed configuration options, see the [chart README](charts/kube-ai-stack/
 ### Homelab
 - This is what it was originally tested for!
 - Enables testing the latest OSS models and quickly have them available in LiteLLM gateway
+- Optimize the runtime based on your hardware, but standardize the serving later
 - Scale-to-zero to enable multiple models on limited hardware
 
 ### Dev Clusters and Experimentation
 - Clusters in lower environments used by MLE/AI Engineers
-- Ability to quickly test 
-- Scale-to-zero enabled for cost effectiveness in off-hours.
+- Ability to quickly test new OSS models
+- Scale-to-zero enabled for cost effectiveness in off-hours
 
 ### Production
 - At the moment, I wouldn't necessarily recommend this
@@ -170,17 +151,8 @@ For detailed configuration options, see the [chart README](charts/kube-ai-stack/
 
 Contributions are welcome! Please feel free to submit issues, feature requests, or pull requests.
 
-## License
 
-This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICENSE) file for details.
-
-## Support
-
-For support and questions:
-- Check the [chart documentation](charts/kube-ai-stack/README.md) for detailed configuration
-- Review the architecture diagram and component descriptions
-- Submit issues for bugs or feature requests
-
----
-
-**Note**: This is a Kubernetes-native solution designed for production environments. Ensure your cluster has the necessary GPU operators and resources before deployment.
+## Roadmap
+- In the short run, I'd like to add more advanced observability including MLFlow and Arise Phoneix
+- In the med run, I'd like to add subcharts, so that you don't need to pre-install certain operators/charts
+- In the long run, I'd like automated CI/CD for testing and publishing of images
