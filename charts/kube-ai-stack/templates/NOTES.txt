@@ -19,11 +19,41 @@ This chart deploys LLM model backends with LiteLLM integration on your Kubernete
    If LiteLLM is configured, access it at:
    http://litellm-proxy.<litellm-namespace>.svc.cluster.local:4000
 
-3. Health Endpoints:
+3. MLflow (if enabled):
+{{- if .Values.global.mlflow.enabled }}
+   MLflow tracking server is deployed and accessible at:
+   http://mlflow.{{ .Values.global.namespace }}.svc.cluster.local:5000
+   
+   To access MLflow UI, you can port-forward:
+   kubectl port-forward -n {{ .Values.global.namespace }} svc/mlflow 5000:5000
+   Then open http://localhost:5000 in your browser
+{{- else }}
+   MLflow is disabled. Enable it by setting global.mlflow.enabled=true
+{{- end }}
+
+4. Phoenix (if enabled):
+{{- if .Values.global.phoenix.enabled }}
+  Phoenix LLM observability platform is deployed and accessible at:
+  http://phoenix.{{ .Values.global.namespace }}.svc.cluster.local:6006
+  
+  To access Phoenix UI, you can port-forward:
+  kubectl port-forward -n {{ .Values.global.namespace }} svc/phoenix 6006:6006
+  Then open http://localhost:6006 in your browser
+  
+  Phoenix API is available at:
+  http://phoenix.{{ .Values.global.namespace }}.svc.cluster.local:6007
+  
+  OTLP trace ingestion endpoint:
+  http://phoenix.{{ .Values.global.namespace }}.svc.cluster.local:4317
+{{- else }}
+  Phoenix is disabled. Enable it by setting global.phoenix.enabled=true
+{{- end }}
+
+5. Health Endpoints:
    Each model exposes a health check at:
    http://<model-name>.<namespace>.svc.cluster.local:8080/health
 
-4. Metrics:
+6. Metrics:
    Prometheus metrics are available at:
    http://<model-name>.<namespace>.svc.cluster.local:8080/metrics
 

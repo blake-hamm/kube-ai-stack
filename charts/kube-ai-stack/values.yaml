@@ -37,6 +37,10 @@ global:
     enabled: false
     secretName: ""
     secretKey: ""
+  mlflow:
+    enabled: false
+  phoenix:
+    enabled: false
   litellm:
     manage_config: true
     config:
@@ -194,3 +198,13 @@ models: []
 #     port: 8081
 #   zeroscaling:
 #     enabled: false
+
+# MLflow subchart configuration
+# When enabled via global.mlflow.enabled=true, this deploys MLflow for experiment tracking and model registry
+# Full values reference: https://github.com/community-charts/helm-charts/blob/mlflow-1.8.1/charts/mlflow/values.yaml
+mlflow: {}
+
+# Phoenix subchart configuration
+# When enabled via global.phoenix.enabled=true, this deploys Phoenix for LLM observability and evaluation
+# Full values reference: https://github.com/Arize-ai/phoenix/blob/main/helm/values.yaml
+phoenix-helm: {}
