@@ -1,0 +1,59 @@
+# Helm chart specific ignores
+# Auto-generated files that should not be committed
+Chart.lock
+charts/
+
+# Common development files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE specific files
+.vscode/
+.idea/
+*.iml
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# OS generated files
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
+
+# Helm package files
+*.tgz
+*.tgz.prov
+
+# Local development overrides
+values-local.yaml
+values-override.yaml
+values-dev.yaml
+values-staging.yaml
+values-prod.yaml
+
+# Kubernetes generated files
+*.kubeconfig
+kubeconfig
+
+# Secrets and sensitive files
+*.key
+*.pem
+*.crt
+*.p12
+secrets.yaml
+secrets-*.yaml
+
+# Build artifacts
+build/
+dist/
+target/

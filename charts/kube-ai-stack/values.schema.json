@@ -139,6 +139,16 @@
             }
           }
         },
+        "mlflow": {
+          "type": "object",
+          "description": "MLflow configuration for enabling the subchart",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Enable MLflow deployment as part of the kube-ai-stack"
+            }
+          }
+        },
         "litellm": {
           "type": "object",
           "properties": {

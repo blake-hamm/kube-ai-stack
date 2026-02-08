@@ -37,6 +37,8 @@ global:
     enabled: false
     secretName: ""
     secretKey: ""
+  mlflow:
+    enabled: false
   litellm:
     manage_config: true
     config:
@@ -194,3 +196,8 @@ models: []
 #     port: 8081
 #   zeroscaling:
 #     enabled: false
+
+# MLflow subchart configuration
+# When enabled via global.mlflow.enabled=true, this deploys MLflow for experiment tracking and model registry
+# Full MLflow values reference: https://github.com/community-charts/helm-charts/blob/mlflow-1.8.1/charts/mlflow/values.yaml
+mlflow: {}

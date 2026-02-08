@@ -4,3 +4,8 @@ description: A Helm chart for deploying LLM model backends with LiteLLM integrat
 type: application
 version: 0.2.0
 appVersion: "1.0.0"
+dependencies:
+  - name: mlflow
+    version: "1.8.1"
+    repository: "https://community-charts.github.io/helm-charts"
+    condition: global.mlflow.enabled
