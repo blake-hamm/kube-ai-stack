@@ -149,6 +149,16 @@
             }
           }
         },
+        "phoenix": {
+          "type": "object",
+          "description": "Phoenix configuration for enabling the subchart",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Enable Phoenix deployment as part of the kube-ai-stack"
+            }
+          }
+        },
         "litellm": {
           "type": "object",
           "properties": {
