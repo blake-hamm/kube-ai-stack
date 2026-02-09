@@ -1,6 +1,6 @@
 # kube-ai-stack
 
-A solution inspired by the [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) with the intention of providing an 'all-in-one' ai platform. At the moment, it's geared towards [my homelab](https://docs.bhamm-lab.com/ai/), but I ensure it is agnostic to any LLMOps/MLOps kubernetes environment. **Feedback is welcome!**
+A solution inspired by the [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) with the intention of providing an 'all-in-one' ai platform. At the moment, it's geared towards [my homelab](https://docs.bhamm-lab.com/ai/), but I will ensure it's agnostic to any LLMOps/MLOps kubernetes environment. **Feedback is welcome!**
 
 <img src="assets/kube-ai-stack.png" alt="kube-ai-stack logo" width="200"/>
 
