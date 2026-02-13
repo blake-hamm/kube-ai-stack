@@ -84,10 +84,10 @@ integrations:
     syncWave:
       configMap: "20"
       pvc: "20"
-      deployment: "21"
-      service: "22"
-      serviceMonitor: "23"
-      autoscaling: "24"
+      deployment: "20"
+      service: "21"
+      serviceMonitor: "22"
+      autoscaling: "23"
 
 models: []
 # - name: example-model
