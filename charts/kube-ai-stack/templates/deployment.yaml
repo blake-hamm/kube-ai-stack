@@ -39,8 +39,8 @@ spec:
             - name: HF_HOME
               value: "/models/cache/huggingface"
 {{- if .template }}
-            - name: TEMPLATE_PATH
-              value: "/prompt/templates"
+            - name: LLAMA_ARG_CHAT_TEMPLATE_FILE
+              value: "/prompt/templates/template.jinja"
 {{- end }}
 {{- if $merged.hfToken.enabled }}
             - name: HF_TOKEN
