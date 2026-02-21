@@ -1,14 +1,17 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended",
-    "helpers:pinGitHubActionDigestsToSemverPatch"
+    "config:recommended"
   ],
-  "packageRules": [
-    {
-      "matchManagers": ["helmv3"],
-      "matchFileNames": ["charts/kube-ai-stack/Chart.yaml"],
-      "labels": ["helm", "dependencies"]
-    }
-  ]
+  "platform": "github",
+  "enabledManagers": ["helmv3"],
+  "helmv3": {
+    "fileMatch": ["(^|/)Chart\\.yaml$"]
+  },
+  "repositories": [
+    "bhamm-lab/kube-ai-stack"
+  ],
+  "autodiscover": false,
+  "onboarding": false,
+  "requireConfig": "optional"
 }
