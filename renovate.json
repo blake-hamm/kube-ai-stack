@@ -3,15 +3,8 @@
   "extends": [
     "config:recommended"
   ],
-  "platform": "github",
   "enabledManagers": ["helmv3"],
   "helmv3": {
     "fileMatch": ["(^|/)Chart\\.yaml$"]
-  },
-  "repositories": [
-    "bhamm-lab/kube-ai-stack"
-  ],
-  "autodiscover": false,
-  "onboarding": false,
-  "requireConfig": "optional"
+  }
 }
