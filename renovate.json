@@ -2,5 +2,16 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+    "config:base",
+    "helpers:pinGitHubActionDigestsToSemverPatch"
+  ],
+  "onboarding": false,
+  "requireConfig": false,
+  "packageRules": [
+    {
+      "matchManagers": ["helmv3"],
+      "matchFileNames": ["charts/kube-ai-stack/Chart.yaml"],
+      "labels": ["helm", "dependencies"]
+    }
   ]
 }
