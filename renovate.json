@@ -4,6 +4,8 @@
     "config:base",
     "helpers:pinGitHubActionDigestsToSemverPatch"
   ],
+  "onboarding": false,
+  "requireConfig": false,
   "packageRules": [
     {
       "matchManagers": ["helmv3"],

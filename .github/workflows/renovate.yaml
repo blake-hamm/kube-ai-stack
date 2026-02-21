@@ -1,0 +1,19 @@
+name: Renovate
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: renovatebot/github-action@v40
+        with:
+          token: ${{ secrets.RENOVATE_TOKEN }}
+        env:
+          RENOVATE_REPOSITORIES: ${{ github.repository }}
+          RENOVATE_ONBOARDING: "false"
+          RENOVATE_USERNAME: "renovate[bot]"
+          RENOVATE_GIT_AUTHOR: "renovate[bot] <renovate[bot]@users.noreply.github.com>"
+          LOG_LEVEL: "info"
