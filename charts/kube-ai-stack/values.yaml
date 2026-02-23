@@ -202,8 +202,22 @@ models: []
 # MLflow subchart configuration
 # When enabled via global.mlflow.enabled=true, this deploys MLflow for experiment tracking and model registry
 # Full values reference: https://github.com/community-charts/helm-charts/blob/mlflow-1.8.1/charts/mlflow/values.yaml
-mlflow: {}
-
+mlflow:
+  image:
+    repository: ghcr.io/mlflow/mlflow
+    pullPolicy: IfNotPresent
+    tag: "v3.10.0-full"
+  initImages:
+    mlflowDbMigration:
+      repository: ghcr.io/mlflow/mlflow
+      pullPolicy: IfNotPresent
+      tag: "v3.10.0-full"
+  extraVolumes:
+    - name: prometheus-dir
+      emptyDir: {}
+  extraVolumeMounts:
+    - name: prometheus-dir
+      mountPath: /mlflow
 # Phoenix subchart configuration
 # When enabled via global.phoenix.enabled=true, this deploys Phoenix for LLM observability and evaluation
 # Full values reference: https://github.com/Arize-ai/phoenix/blob/main/helm/values.yaml
