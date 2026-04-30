@@ -10,7 +10,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: {{ $.Values.integrations.argocd.syncWave.service | quote }}
   labels:
-    {{- include "kube-ai-stack.serviceLabels" $ | nindent 4 }}
+    {{- include "kube-ai-stack.modelLabels" (dict "model" . "root" $) | nindent 4 }}
 spec:
   type: ClusterIP
   selector:
