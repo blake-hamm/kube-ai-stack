@@ -246,6 +246,17 @@
           },
           "zeroscaling": {
             "type": "object"
+          },
+          "litellm": {
+            "type": "object",
+            "description": "LiteLLM registration settings for this model",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to register this model in the LiteLLM config"
+              }
+            }
           }
         },
         "required": [
