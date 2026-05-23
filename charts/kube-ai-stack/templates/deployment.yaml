@@ -23,6 +23,9 @@ spec:
       labels:
         {{- include "kube-ai-stack.modelSelectorLabels" (dict "model" . "root" $) | nindent 8 }}
     spec:
+      {{- if .hostNetwork }}
+      hostNetwork: true
+      {{- end }}
       tolerations:
 {{- toYaml $merged.tolerations | nindent 8 }}
       nodeSelector:
@@ -62,6 +65,7 @@ spec:
           ports:
             - containerPort: {{ $.Values.serverPresets.llamaCpp.defaultPort }}
               name: http
+          {{- if dig "probes" "enabled" true . }}
           startupProbe:
             httpGet:
               path: {{ $.Values.serverPresets.llamaCpp.healthPath }}
@@ -86,6 +90,7 @@ spec:
             periodSeconds: 120
             timeoutSeconds: 20
             failureThreshold: 15
+          {{- end }}
       volumes:
         - name: model-cache
           persistentVolumeClaim:

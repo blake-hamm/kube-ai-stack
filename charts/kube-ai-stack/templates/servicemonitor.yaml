@@ -1,5 +1,5 @@
 {{- range .Values.models }}
-{{- if .enabled }}
+{{- if and .enabled (dig "servicemonitor" "enabled" true .) }}
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
