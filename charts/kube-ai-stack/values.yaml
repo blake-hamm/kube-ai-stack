@@ -138,6 +138,8 @@ models: []
 #     enabled: true
 #   servicemonitor:
 #     enabled: true
+#   litellm:
+#     enabled: true
 # - name: gpt-oss-120b
 #   enabled: true
 #   image:

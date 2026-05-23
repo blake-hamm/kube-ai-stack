@@ -15,7 +15,7 @@ data:
     {{- end }}
     model_list:
     {{- range .Values.models }}
-    {{- if .enabled }}
+    {{- if and .enabled (dig "litellm" "enabled" true .) }}
     - model_name: {{ .name | quote }}
       litellm_params:
         model: {{ printf "openai/%s" .name | quote }}
