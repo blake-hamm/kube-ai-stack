@@ -116,7 +116,20 @@ Each model in `global.models` array supports:
 | `service.port` | Service port | Global default |
 | `args` | Container command arguments | - |
 | `template` | Jinja2 prompt template | - |
+| `hostNetwork` | Run pod in host network namespace | `false` |
+| `probes.enabled` | Enable HTTP health/readiness/liveness probes | `true` |
+| `servicemonitor.enabled` | Enable Prometheus ServiceMonitor for this model | `true` |
 | `litellm_params` | LiteLLM parameters | - |
+
+### Non-HTTP / RPC Backends
+
+By default the chart assumes every model exposes an HTTP port and configures `startupProbe`, `readinessProbe`, `livenessProbe`, and a `ServiceMonitor` scraping `/metrics`. For non-HTTP workloads (for example an RPC server or a custom binary that does not speak HTTP) you can opt out of those defaults on a per-model basis:
+
+* `hostNetwork: true` — binds the pod directly to the host network namespace. Useful when the container needs to listen on well-known ports or communicate over the node's network interfaces.
+* `probes.enabled: false` — removes all HTTP probe blocks from the Deployment. Set this when the container does not expose an HTTP health endpoint.
+* `servicemonitor.enabled: false` — skips creating the `ServiceMonitor` for this model. Use this when there is no Prometheus-compatible `/metrics` endpoint.
+
+All three keys are optional and default to the standard HTTP-oriented behavior so existing models continue to work unchanged.
 
 ## Example Values
 

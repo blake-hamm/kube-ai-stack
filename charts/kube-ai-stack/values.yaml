@@ -133,6 +133,11 @@ models: []
 #     {%- if messages[-1]['role'] == "user" %}
 #         {{- '<|im_start|>assistant\n' }}
 #     {%- endif %}
+#   hostNetwork: false
+#   probes:
+#     enabled: true
+#   servicemonitor:
+#     enabled: true
 # - name: gpt-oss-120b
 #   enabled: true
 #   image:
