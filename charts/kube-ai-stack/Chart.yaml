@@ -6,7 +6,7 @@ version: 0.2.0
 appVersion: "1.0.0"
 dependencies:
   - name: mlflow
-    version: "1.11.2"
+    version: "1.11.4"
     repository: "https://community-charts.github.io/helm-charts"
     condition: global.mlflow.enabled
   - name: phoenix-helm
