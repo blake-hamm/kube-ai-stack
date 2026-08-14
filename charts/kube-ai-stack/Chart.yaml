@@ -10,6 +10,6 @@ dependencies:
     repository: "https://community-charts.github.io/helm-charts"
     condition: global.mlflow.enabled
   - name: phoenix-helm
-    version: "9.0.13"
+    version: "12.0.1"
     repository: "oci://registry-1.docker.io/arizephoenix"
     condition: global.phoenix.enabled
