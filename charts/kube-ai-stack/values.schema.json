@@ -218,6 +218,35 @@
               "type": "string"
             }
           },
+          "command": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Optional container entrypoint override."
+          },
+          "env": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "Extra environment variables appended to the container's fixed env list."
+          },
+          "initContainers": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "Optional init containers (rendered via tpl)."
+          },
+          "hostIPC": {
+            "type": "boolean",
+            "description": "Set hostIPC on the pod (e.g. for vLLM shared-memory IPC)."
+          },
+          "securityContext": {
+            "type": "object",
+            "description": "Container-level security context."
+          },
           "template": {
             "type": "string",
             "description": "A Jinja2 template for the model's prompt."
