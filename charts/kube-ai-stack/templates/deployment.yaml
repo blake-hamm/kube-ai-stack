@@ -71,7 +71,11 @@ spec:
 {{- toYaml .securityContext | nindent 12 }}
           {{- end }}
           resources:
-{{- toYaml $merged.resources | nindent 12 }}
+{{- if .resources }}
+{{- toYaml .resources | nindent 12 }}
+{{- else }}
+{{- toYaml $.Values.global.resources | nindent 12 }}
+{{- end }}
           volumeMounts:
             - name: model-cache
               mountPath: /models/cache
