@@ -19,5 +19,12 @@ spec:
     - name: http
       port: {{ $merged.service.port }}
       targetPort: http
+{{- range $sc := .sidecars }}
+{{- range $p := $sc.ports }}
+    - name: {{ $p.name }}
+      port: {{ $p.containerPort }}
+      targetPort: {{ $p.containerPort }}
+{{- end }}
+{{- end }}
 {{- end }}
 {{- end }}

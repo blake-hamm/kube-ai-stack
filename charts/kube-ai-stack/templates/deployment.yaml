@@ -113,6 +113,33 @@ spec:
             timeoutSeconds: 20
             failureThreshold: 15
           {{- end }}
+{{- if .sidecars }}
+{{- range .sidecars }}
+        - name: {{ .name }}
+          image: "{{ .image.repository }}:{{ .image.tag }}"
+          imagePullPolicy: {{ .image.pullPolicy | default "IfNotPresent" }}
+{{- if .command }}
+          command:
+{{- toYaml .command | nindent 12 }}
+{{- end }}
+{{- if .args }}
+          args:
+{{- toYaml .args | nindent 12 }}
+{{- end }}
+{{- if .env }}
+          env:
+{{- tpl (toYaml .env) $ | nindent 12 }}
+{{- end }}
+{{- if .resources }}
+          resources:
+{{- toYaml .resources | nindent 12 }}
+{{- end }}
+{{- if .ports }}
+          ports:
+{{- toYaml .ports | nindent 12 }}
+{{- end }}
+{{- end }}
+{{- end }}
       volumes:
         - name: model-cache
           persistentVolumeClaim:
