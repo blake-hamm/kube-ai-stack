@@ -38,7 +38,10 @@ spec:
 {{- tpl (toYaml .initContainers) $ | nindent 8 }}
       {{- end }}
       containers:
-        - name: {{ .name }}
+        # Container names must be DNS-1123 labels (no dots); model names
+        # like "deepseek-v4.1-flash" are valid Deployment names but not
+        # container names. Strip dots for the container only.
+        - name: {{ .name | replace "." "" }}
           image: "{{ $merged.image.repository }}:{{ $merged.image.tag }}"
           imagePullPolicy: {{ $merged.image.pullPolicy }}
           {{- if .command }}
@@ -122,6 +125,33 @@ spec:
             failureThreshold: 15
           {{- end }}
           {{- end }}
+{{- if .sidecars }}
+{{- range .sidecars }}
+        - name: {{ .name }}
+          image: "{{ .image.repository }}:{{ .image.tag }}"
+          imagePullPolicy: {{ .image.pullPolicy | default "IfNotPresent" }}
+{{- if .command }}
+          command:
+{{- toYaml .command | nindent 12 }}
+{{- end }}
+{{- if .args }}
+          args:
+{{- toYaml .args | nindent 12 }}
+{{- end }}
+{{- if .env }}
+          env:
+{{- tpl (toYaml .env) $ | nindent 12 }}
+{{- end }}
+{{- if .resources }}
+          resources:
+{{- toYaml .resources | nindent 12 }}
+{{- end }}
+{{- if .ports }}
+          ports:
+{{- toYaml .ports | nindent 12 }}
+{{- end }}
+{{- end }}
+{{- end }}
       volumes:
         - name: model-cache
           persistentVolumeClaim:
