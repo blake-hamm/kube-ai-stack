@@ -88,6 +88,14 @@ spec:
             - containerPort: {{ $.Values.serverPresets.llamaCpp.defaultPort }}
               name: http
           {{- if dig "probes" "enabled" true . }}
+          {{- if dig "probes" "spec" nil . }}
+          # Per-model probe override: render the user-supplied probe spec verbatim.
+          # Use this for non-llama.cpp backends whose health surface differs from
+          # the default /health:8080 (e.g. an OpenAI-style API with no /health
+          # endpoint, or a worker process with no HTTP server at all that needs
+          # an exec probe). When set, this fully replaces the default probes below.
+{{- tpl (toYaml .probes.spec) $ | nindent 10 }}
+          {{- else }}
           startupProbe:
             httpGet:
               path: {{ $.Values.serverPresets.llamaCpp.healthPath }}
@@ -112,6 +120,7 @@ spec:
             periodSeconds: 120
             timeoutSeconds: 20
             failureThreshold: 15
+          {{- end }}
           {{- end }}
       volumes:
         - name: model-cache

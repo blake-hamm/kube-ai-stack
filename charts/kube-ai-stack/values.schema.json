@@ -286,6 +286,21 @@
                 "description": "Whether to register this model in the LiteLLM config"
               }
             }
+          },
+          "probes": {
+            "type": "object",
+            "description": "Per-model probe configuration. When probes.spec is set, it is rendered verbatim and replaces the default llama.cpp /health:8080 probes (useful for non-llama.cpp backends with a different health surface, or for worker processes that need an exec probe). When probes.spec is absent, the default httpGet probes are used.",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to attach probes to this model's pod. Defaults to true."
+              },
+              "spec": {
+                "type": "object",
+                "description": "Optional raw probe spec (startupProbe / readinessProbe / livenessProbe). Rendered verbatim via toYaml. When present, it fully replaces the default probes."
+              }
+            }
           }
         },
         "required": [
