@@ -136,6 +136,20 @@ models: []
 #   hostNetwork: false
 #   probes:
 #     enabled: true
+#     # Optional: override the default llama.cpp /health:8080 probes with a
+#     # custom spec. Useful for non-llama.cpp backends (e.g. an OpenAI-style
+#     # API with no /health endpoint, or a worker process with no HTTP server
+#     # that needs an exec probe). When set, this fully replaces the defaults.
+#     # spec:
+#     #   readinessProbe:
+#     #     httpGet:
+#     #       path: /v1/models
+#     #       port: 8080
+#     #     periodSeconds: 30
+#     #   livenessProbe:
+#     #     exec:
+#     #       command: ["pgrep", "ds4"]
+#     #     periodSeconds: 30
 #   servicemonitor:
 #     enabled: true
 #   litellm:
