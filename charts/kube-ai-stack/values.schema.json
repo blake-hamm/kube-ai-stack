@@ -165,6 +165,14 @@
             "manage_config": {
               "type": "boolean"
             },
+            "extraModels": {
+              "type": "array",
+              "description": "Additional LiteLLM model_list entries rendered verbatim, with no Deployment/Service of their own. Use for aliases that point at an existing model's api_base (e.g. a temperature-pinned variant). Each item is a full model_list entry: model_name plus litellm_params.",
+              "items": {
+                "type": "object",
+                "required": ["model_name", "litellm_params"]
+              }
+            },
             "config": {
               "type": "object",
               "properties": {

@@ -36,4 +36,10 @@ data:
         {{- end }}
     {{- end }}
     {{- end }}
+    {{- with .Values.global.litellm.extraModels }}
+    # Extra model_list entries with no deployment of their own (aliases pointing at
+    # an existing model's api_base, e.g. a temperature-pinned variant). Rendered
+    # verbatim as model_list items.
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 {{- end }}
